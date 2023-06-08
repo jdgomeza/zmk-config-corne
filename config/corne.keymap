@@ -10,9 +10,9 @@
 
 / {
     behaviors {
-        auto_shift: auto_shift {
+        as: auto_shift {
             compatible = "zmk,behavior-hold-tap";
-            label = "AUTO_SHIFT";
+            label = "AS";
             bindings =
                 <&kp>,
                 <&kp>;
@@ -44,6 +44,24 @@
             mods = <(MOD_LSFT|MOD_LCTL)>;
             keep-mods = <(MOD_LSFT)>;
         };
+        sh_cp: shift_caps {
+            compatible = "zmk,behavior-tap-dance";
+            label = "SHIFT_CAPS";
+            #binding-cells = <0>;
+            bindings =
+                <&kp LEFT_SHIFT>,
+                <&caps_word>,
+                <&kp LEFT_CONTROL>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        control_layer {
+            bindings = <&tog 3>;
+            key-positions = <12 24>;
+        };
     };
 
     keymap {
@@ -57,10 +75,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-  &kp TAB                &kp Q                &kp W     &kp E  &kp R                       &kp T      &kp Y  &kp U      &kp I    &kp O     &kp P      &bspc_del
-&kp LCTRL  &auto_shift LS(A) A  &auto_shift LS(S) S     &kp D  &kp F                       &kp G      &kp H  &kp J      &kp K    &kp L  &kp SEMI        &kp SQT
-&kp LSHFT                &kp Z                &kp X     &kp C  &kp V                       &kp B      &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &grave_escape
-                                                     &kp LGUI  &mo 1  &mt LS(LA(LC(LGUI))) SPACE    &kp RET  &mo 2   &kp RALT
+         &kp TAB  &kp Q  &kp W     &kp E  &kp R                       &kp T      &kp Y  &kp U      &kp I    &kp O     &kp P      &bspc_del
+&sk LEFT_CONTROL  &kp A  &kp S     &kp D  &kp F                       &kp G      &kp H  &kp J      &kp K    &kp L  &kp SEMI        &kp SQT
+          &sh_cp  &kp Z  &kp X     &kp C  &kp V                       &kp B      &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &grave_escape
+                                &kp LGUI  &mo 1  &mt LS(LA(LC(LGUI))) SPACE    &kp RET  &mo 2   &kp RALT
             >;
         };
 
@@ -72,10 +90,10 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-   &kp TAB        &kp N1        &kp N2        &kp N3        &kp N4        &kp N5      &kp N6    &kp N7    &kp N8     &kp N9  &kp N0  &kp BSPC
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT  &kp DOWN    &kp UP  &kp RIGHT  &trans    &trans
- &kp LSHFT        &trans        &trans        &trans        &trans        &trans    &kp HOME   &kp END    &trans     &trans  &trans    &trans
-                                            &kp LGUI        &trans        &trans     &kp RET    &trans  &kp RALT
+   &trans        &kp N1        &kp N2        &kp N3        &kp N4        &kp N5      &kp N6    &kp N7    &kp N8     &kp N9  &kp N0       &kp BSPC
+   &trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT  &kp DOWN    &kp UP  &kp RIGHT  &trans    &kp PAGE_UP
+&kp LSHFT        &trans        &trans        &trans        &trans        &trans    &kp HOME   &kp END    &trans     &trans  &trans  &kp PAGE_DOWN
+                                           &kp LGUI        &trans        &trans     &kp RET    &trans  &kp RALT
             >;
         };
 
@@ -87,11 +105,22 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-  &kp TAB  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET   &kp AMPS  &kp KP_MULTIPLY  &kp LPAR  &kp RPAR   &kp BSPC
+&kp GRAVE  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET   &kp AMPS  &kp KP_MULTIPLY  &kp LPAR  &kp RPAR   &kp BSPC
 &kp LCTRL    &trans  &trans    &trans    &trans     &trans    &kp MINUS  &kp EQUAL         &kp LBKT  &kp RBKT  &kp BSLH  &kp GRAVE
 &kp LSHFT    &trans  &trans    &trans    &trans     &trans    &kp UNDER   &kp PLUS         &kp LBRC  &kp RBRC  &kp PIPE  &kp TILDE
                              &kp LGUI    &trans  &kp SPACE      &kp RET     &trans         &kp RALT
             >;
+        };
+
+        control {
+            bindings = <
+&trans  &kp SLASH  &kp N7  &kp N8  &kp N9  &kp MINUS    &bt BT_PRV  &trans  &trans  &trans  &trans      &trans
+&trans   &kp STAR  &kp N4  &kp N5  &kp N6   &kp PLUS    &bt BT_NXT  &trans  &trans  &trans  &trans      &trans
+&trans     &trans  &kp N1  &kp N2  &kp N3    &kp DOT        &trans  &trans  &trans  &trans  &trans  &bt BT_CLR
+                           &kp N0  &trans     &trans        &trans  &trans  &trans
+            >;
+
+            label = "control";
         };
     };
 };
