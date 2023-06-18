@@ -91,38 +91,24 @@
             bindings = <&kp LBKT>;
             key-positions = <2 14>;
         };
+
+        combo_eq {
+            bindings = <&kp EQUAL>;
+            key-positions = <22 23>;
+        };
+
+        combo_par {
+            bindings = <&kp LEFT_PARENTHESIS>;
+            key-positions = <3 15>;
+        };
     };
 
     macros {
-        macro_copy: macro_copy {
+        mc_clip: mc_clip {
             compatible = "zmk,behavior-macro";
-            label = "MACRO_COPY";
+            label = "MC_CLIP";
             #binding-cells = <0>;
-            bindings = <&kp RG(C)>;
-        };
-        macro_paste: macro_paste {
-            compatible = "zmk,behavior-macro";
-            label = "MACRO_PASTE";
-            #binding-cells = <0>;
-            bindings = <&kp LG(V)>;
-        };
-        mc_nwin: mc_nwin {
-            compatible = "zmk,behavior-macro";
-            label = "MC_NWIN";
-            #binding-cells = <0>;
-            bindings = <&kp LG(TAB)>;
-        };
-        mc_ninst: mc_ninst {
-            compatible = "zmk,behavior-macro";
-            label = "MC_NINST";
-            #binding-cells = <0>;
-            bindings = <&kp LG(GRAVE)>;
-        };
-        mc_ntab: mc_ntab {
-            compatible = "zmk,behavior-macro";
-            label = "NTAB";
-            #binding-cells = <0>;
-            bindings = <&kp LC(TAB)>;
+            bindings = <&kp LG(LS(N4))>;
         };
     };
 
@@ -144,7 +130,7 @@
             >;
         };
 
-        lower_layer {
+        navigation {
             // -----------------------------------------------------------------------------------------
             // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
             // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
@@ -152,13 +138,13 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&trans   &kp F1   &kp F2       &kp F3        &kp F4   &kp F5    &mc_nwin  &mc_ninst  &mc_ntab       &none             &kp C_PP      &kp K_APP
-&trans   &kp F6   &kp F7       &kp F8        &kp F9  &kp F10    &kp LEFT   &kp DOWN    &kp UP   &kp RIGHT         &kp C_VOL_UP    &kp PAGE_UP
-&trans  &kp F11  &kp F12  &macro_copy  &macro_paste   &trans    &kp HOME    &kp END    &trans  &kp K_MUTE  &mt C_VOL_DN K_MUTE  &kp PAGE_DOWN
-                             &kp LGUI        &trans   &trans     &kp RET     &trans  &kp RALT
+&trans   &kp F1   &kp F2    &kp F3  &kp F4   &kp F5    &kp LG(TAB)  &kp LG(GRAVE)  &kp LC(TAB)  &kp LS(LG(N3))                  &kp C_PP      &kp K_APP
+&trans   &kp F6   &kp F7    &kp F8  &kp F9  &kp F10       &kp LEFT       &kp DOWN       &kp UP       &kp RIGHT              &kp C_VOL_UP    &kp PAGE_UP
+&trans  &kp F11  &kp F12    &trans  &trans   &trans       &kp HOME        &kp END   &kp C_PREV      &kp C_NEXT  &mt K_MUTE C_VOLUME_DOWN  &kp PAGE_DOWN
+                          &kp LGUI  &trans   &trans        &kp RET         &trans     &kp RALT
             >;
 
-            label = "lower#";
+            label = "nav";
         };
 
         raise_layer {
